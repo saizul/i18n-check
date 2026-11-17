@@ -138,7 +138,8 @@ describe('checks on the react-i18next fixture', () => {
 
   it('checks plural forms with CLDR categories (Arabic needs six)', () => {
     assert.deepEqual(rules['plural-forms'], ['ar common:items']);
-    assert.match(r.issues.find((x) => x.rule === 'plural-forms')!.message, /_zero, _two, _many/);
+    const pluralMsg = r.issues.find((x) => x.rule === 'plural-forms')!.message;
+    for (const form of ['_zero', '_two', '_many']) assert.ok(pluralMsg.includes(form), form);
   });
 
   it('finds unused, extra, empty, untranslated and dynamic keys', () => {
