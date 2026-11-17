@@ -1,0 +1,10 @@
+{
+  "locales": "public/locales/{locale}/{namespace}.json",
+  "baseLocale": "en",
+  "defaultNamespace": "common",
+  "src": ["src/**/*.{ts,tsx}"],
+  "ignoreUntranslated": ["common:brand"],
+  "rules": {
+    "untranslated": "warning"
+  }
+}

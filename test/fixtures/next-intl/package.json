@@ -1,0 +1,1 @@
+{ "name": "fixture-next-intl", "private": true, "dependencies": { "next": "^15.0.0", "next-intl": "^4.0.0" } }

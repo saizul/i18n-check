@@ -1,0 +1,26 @@
+{
+  "locales": ["public/locales/{locale}/{namespace}.json"],
+  "baseLocale": "en",
+  "onlyLocales": ["bn", "hi", "ar"],
+  "src": ["src/**/*.{ts,tsx}", "app/**/*.{ts,tsx}"],
+  "exclude": ["src/legacy/**"],
+  "extractors": ["i18next"],
+  "functions": ["t", "i18n.t", "i18next.t"],
+  "defaultNamespace": "common",
+  "namespaceSeparator": ":",
+  "keySeparator": ".",
+  "messageFormat": "i18next",
+  "rules": {
+    "unused-key": "error",
+    "untranslated": "warning",
+    "dynamic-key": "off"
+  },
+  "ignoreKeys": ["debug:*"],
+  "ignoreUnused": ["common:errors.*", "emails:*"],
+  "ignoreUntranslated": ["common:brand", "*.email"],
+  "dynamicPrefixAsUsed": true,
+  "fix": {
+    "fill": "base",
+    "sort": true
+  }
+}

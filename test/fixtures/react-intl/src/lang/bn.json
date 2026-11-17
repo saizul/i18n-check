@@ -1,0 +1,5 @@
+{
+  "app.title": "ড্যাশবোর্ড",
+  "app.greeting": "হাই {name}, আপনার {count, plural, one {#টি কাজ} other {#টি কাজ}} আছে",
+  "app.logout": "Log out"
+}

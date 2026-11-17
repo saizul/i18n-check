@@ -1,0 +1,17 @@
+{
+  "title": "Welcome, {{name}}!",
+  "welcome": "Hello <1>{{name}}</1>, you have {{count}} messages.",
+  "items_one": "{{count}} item",
+  "items_other": "{{count}} items",
+  "status": {
+    "active": "Active",
+    "blocked": "Blocked"
+  },
+  "nav": {
+    "home": "Home",
+    "settings": "Settings"
+  },
+  "footer": "Made with care · $t(nav.home)",
+  "legacy": "Old banner",
+  "brand": "Acme"
+}

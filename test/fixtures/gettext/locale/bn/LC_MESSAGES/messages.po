@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Language: bn\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Hello %s"
+msgstr "হ্যালো %s"
+
+#, fuzzy
+msgctxt "menu"
+msgid "Open"
+msgstr "খুলুন"
+
+msgid "One file"
+msgid_plural "%d files"
+msgstr[0] "একটি ফাইল"
+msgstr[1] "%dটি ফাইল"

@@ -1,0 +1,8 @@
+{
+  "Home": {
+    "title": "হ্যালো {name}!",
+    "unread": "{count, plural, =0 {কোনো নতুন বার্তা নেই} other {#টি নতুন বার্তা}}",
+    "terms": "চালিয়ে গেলে আপনি <link>শর্তাবলী</link> মেনে নিচ্ছেন।",
+    "updated": "হালনাগাদ {date, date, medium}"
+  }
+}

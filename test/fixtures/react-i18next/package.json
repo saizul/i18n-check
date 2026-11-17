@@ -1,0 +1,1 @@
+{ "name": "fixture-react-i18next", "private": true, "dependencies": { "react-i18next": "^15.0.0", "i18next": "^24.0.0" } }

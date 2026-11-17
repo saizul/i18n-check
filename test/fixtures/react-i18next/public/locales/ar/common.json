@@ -1,0 +1,12 @@
+{
+  "title": "مرحبا {{user}}!",
+  "welcome": "مرحبا <1>{{name}}</1>، لديك {{count}} رسائل.",
+  "items_one": "عنصر واحد",
+  "items_other": "{{count}} عناصر",
+  "items_few": "{{count}} عناصر",
+  "status": { "active": "نشط", "blocked": "محظور" },
+  "nav": { "home": "الرئيسية", "settings": "الإعدادات" },
+  "footer": "صنع بعناية · $t(nav.home)",
+  "legacy": "لافتة قديمة",
+  "brand": "Acme"
+}

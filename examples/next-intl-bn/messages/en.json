@@ -1,0 +1,8 @@
+{
+  "Home": {
+    "title": "Hello {name}!",
+    "unread": "{count, plural, =0 {No new messages} one {# new message} other {# new messages}}",
+    "terms": "By continuing you accept the <link>terms</link>.",
+    "updated": "Updated {date, date, medium}"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "brand": "Dhaka Books",
+  "nav": {
+    "home": "হোম",
+    "cart": "কার্ট",
+    "account": "আমার অ্যাকাউন্ট"
+  },
+  "hero": {
+    "title": "স্বাগতম, {{name}}!",
+    "subtitle": "সারা বাংলাদেশে {{days}} দিনে বই পৌঁছে দেওয়া হয়।"
+  },
+  "cart": {
+    "items_one": "আপনার কার্টে {{count}}টি বই",
+    "items_other": "আপনার কার্টে {{count}}টি বই",
+    "total": "মোট: {{amount, currency(BDT)}}",
+    "checkout": "চেকআউট"
+  },
+  "status": {
+    "pending": "অপেক্ষমাণ",
+    "shipped": "পাঠানো হয়েছে",
+    "delivered": "পৌঁছে গেছে"
+  }
+}

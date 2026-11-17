@@ -1,0 +1,16 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Hello %s"
+msgstr ""
+
+msgctxt "menu"
+msgid "Open"
+msgstr ""
+
+msgid "One file"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""

@@ -1,0 +1,23 @@
+{
+  "brand": "Dhaka Books",
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "account": "My account"
+  },
+  "hero": {
+    "title": "Welcome, {{name}}!",
+    "subtitle": "Books delivered across Bangladesh in {{days}} days."
+  },
+  "cart": {
+    "items_one": "{{count}} book in your cart",
+    "items_other": "{{count}} books in your cart",
+    "total": "Total: {{amount, currency(BDT)}}",
+    "checkout": "Checkout"
+  },
+  "status": {
+    "pending": "Pending",
+    "shipped": "Shipped",
+    "delivered": "Delivered"
+  }
+}

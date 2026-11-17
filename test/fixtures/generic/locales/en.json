@@ -1,0 +1,6 @@
+{
+  "greeting": "Hello %s",
+  "count": "%d files in %s",
+  "bye": "Goodbye",
+  "named": "Hi %(name)s"
+}

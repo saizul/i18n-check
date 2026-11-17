@@ -1,0 +1,8 @@
+<h1>{{ 'HOME.TITLE' | translate }}</h1>
+<p>{{ 'HOME.HELLO' | translate: { name: user } }}</p>
+<p translate>HOME.INTRO</p>
+<button [translate]="'MENU.SAVE'"></button>
+<button translate="MENU.CANCEL"></button>
+<!-- {{ 'COMMENTED.OUT' | translate }} -->
+<span>{{ labelKey | translate }}</span>
+<span>{{ 'HOME.MISSING' | translate }}</span>

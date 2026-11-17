@@ -1,0 +1,15 @@
+{
+  "Home": {
+    "title": "হ্যালো {name}!",
+    "cart": "{count, plural, other {#টি আইটেম}}",
+    "terms": "<link>শর্তাবলী</link> পড়ুন",
+    "rank": "আপনি {place, selectordinal, one {#ম} other {#তম}} হয়েছেন"
+  },
+  "About": {
+    "title": "আমাদের সম্পর্কে",
+    "since": "{year, number, ::integer} সাল থেকে {"
+  },
+  "Unused": {
+    "old": "পুরনো লেখা"
+  }
+}

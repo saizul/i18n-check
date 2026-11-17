@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint and typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    needs: lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: [20, 22]
+        include:
+          - os: windows-latest
+            node: 22
+          - os: macos-latest
+            node: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Run the examples against the build
+        run: |
+          node examples/api.mjs
+          node examples/commonjs.cjs
+      - name: Smoke-test the CLI
+        run: |
+          node dist/esm/cli.js --version
+          node dist/esm/cli.js --list-rules
+          node dist/esm/cli.js --cwd examples/bangla-react
+          node dist/esm/cli.js --cwd examples/next-intl-bn --format github --fail-on error
+      - name: Check the packed package
+        run: npm pack --dry-run

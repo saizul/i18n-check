@@ -1,0 +1,6 @@
+{
+  "app.title": "Dashboard",
+  "app.greeting": "Hi {name}, you have {count, plural, one {# task} other {# tasks}}",
+  "app.logout": "Log out",
+  "app.unused": "Nobody reads me"
+}

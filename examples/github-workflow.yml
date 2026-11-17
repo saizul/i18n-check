@@ -1,0 +1,31 @@
+# .github/workflows/i18n.yml: check translations on every pull request.
+name: Translations
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  i18n-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: "@saizul"
+      - name: Install i18n-check from GitHub Packages
+        run: npm install --no-save @saizul/i18n-check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Annotations on the changed lines of the pull request.
+      - run: npx i18n-check --format github --fail-on error
+      # A coverage table in the job summary.
+      - if: always()
+        run: npx i18n-check --format markdown --output "$GITHUB_STEP_SUMMARY" --fail-on none > /dev/null

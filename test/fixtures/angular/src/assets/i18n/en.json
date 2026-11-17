@@ -1,0 +1,15 @@
+{
+  "HOME": {
+    "TITLE": "Welcome",
+    "HELLO": "Hello {{ name }}",
+    "INTRO": "This is the intro"
+  },
+  "MENU": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "TOAST": {
+    "SAVED": "Saved!"
+  },
+  "UNUSED": "Not used"
+}

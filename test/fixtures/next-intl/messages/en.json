@@ -1,0 +1,15 @@
+{
+  "Home": {
+    "title": "Hello {name}!",
+    "cart": "{count, plural, =0 {Your cart is empty} one {# item} other {# items}}",
+    "terms": "Read the <link>terms</link>",
+    "rank": "You finished {place, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}"
+  },
+  "About": {
+    "title": "About us",
+    "since": "Since {year, number, ::integer}"
+  },
+  "Unused": {
+    "old": "Old text"
+  }
+}

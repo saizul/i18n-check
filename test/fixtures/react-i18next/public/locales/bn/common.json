@@ -1,0 +1,17 @@
+{
+  "title": "স্বাগতম, {{name}}!",
+  "welcome": "হ্যালো <1>{{name}}</1>, আপনার {{count}}টি বার্তা আছে।",
+  "items_one": "{{count}}টি আইটেম",
+  "items_other": "{{count}}টি আইটেম",
+  "status": {
+    "active": "সক্রিয়",
+    "blocked": ""
+  },
+  "nav": {
+    "home": "হোম",
+    "settings": "Settings"
+  },
+  "footer": "যত্ন সহকারে তৈরি · $t(nav.home)",
+  "brand": "Acme",
+  "oldKey": "পুরনো"
+}

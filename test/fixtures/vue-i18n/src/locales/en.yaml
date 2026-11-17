@@ -1,0 +1,13 @@
+# English messages
+app:
+  title: My shop
+  greeting: "Hello, {name}!"
+cart:
+  empty: Your cart is empty
+  items: "no items | one item | {count} items"
+  total: "Total: {amount}"
+  checkout: "@:app.title checkout"
+about: |
+  We sell things.
+  Since 2020.
+unused: Not used anywhere

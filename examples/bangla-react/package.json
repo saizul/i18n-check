@@ -1,0 +1,10 @@
+{
+  "name": "example-bangla-react",
+  "private": true,
+  "description": "A react-i18next app with English and Bangla (bn) translations",
+  "dependencies": {
+    "i18next": "^24.0.0",
+    "react": "^19.0.0",
+    "react-i18next": "^15.0.0"
+  }
+}
