@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `i18n-check export` lists the strings translators still have to work on (missing keys, empty values and values
+  that are still the base text) as CSV (`locale,key,source,target,reason`, formula-safe), XLIFF 1.2 (one `<file>`
+  per target locale, `state="needs-translation"`) or JSON. `--include missing,empty,untranslated` picks the
+  reasons, `--only-locales` the locales and `--output` writes a file. `ignoreKeys`, `ignoreUntranslated` and rules
+  turned off are respected, and plural forms a locale does not use are skipped.
+- Library: `collectTasks()`, `formatTasks()`, `tasksToCsv()`, `tasksToXliff()`, `TASK_REASONS`, `TASK_RULES`,
+  `EXPORT_FORMATS` and the `TranslationTask`, `TaskReason` and `ExportFormat` types.
+
 ## [0.1.0] - 2026-11-17
 
 ### Added

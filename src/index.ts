@@ -49,6 +49,18 @@ export {
   readStringArg,
 } from './extractors/source.js';
 export type { DynamicKey, ExtractOptions, ExtractResult, Extractor, UsedKey } from './extractors/types.js';
+export {
+  collectTasks,
+  EXPORT_FORMATS,
+  type ExportFormat,
+  formatTasks,
+  TASK_REASONS,
+  TASK_RULES,
+  type TaskReason,
+  type TranslationTask,
+  tasksToCsv,
+  tasksToXliff,
+} from './export.js';
 export { applyFixes, type FileChange, type FixOptions, planFixes } from './fix.js';
 export {
   type Catalog,
