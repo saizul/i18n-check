@@ -73,6 +73,7 @@ info dynamic-key (1)
 - [Rules](#rules)
 - [CLI](#cli)
 - [The fix command](#the-fix-command)
+- [Exporting for translators](#exporting-for-translators)
 - [Configuration](#configuration)
 - [CI and GitHub Actions](#ci-and-github-actions)
 - [API](#api)
@@ -226,6 +227,7 @@ missing `{{count}}` in `_zero`, `_one` and `_two` forms is not reported.
 i18n-check [check] [options]     Report problems (default command)
 i18n-check fix [options]         Sort keys, add missing keys, remove unused ones
 i18n-check extract [options]     List the keys found in the source code
+i18n-check export [options]      Untranslated strings for translators (CSV, XLIFF, JSON)
 ```
 
 | Option                   | Meaning                                                                  |
@@ -284,6 +286,52 @@ Changed 3 files: 5 keys added, 0 removed
 - `--remove-unused` needs a source scan and respects `ignoreUnused` and
   dynamic prefixes. Run it with `--dry-run` first and commit before you run
   it for real.
+
+## Exporting for translators
+
+`export` lists every string a translator still has to work on, without any
+machine translation: keys missing in a locale (`missing`), empty values
+(`empty`) and values that are still the base text (`untranslated`).
+
+```console
+$ i18n-check export > todo.csv                            # CSV for a spreadsheet
+$ i18n-check export --format xliff --only-locales bn -o bn.xlf   # XLIFF 1.2 for a translation tool
+$ i18n-check export --include missing,empty --format json
+```
+
+```text
+$ i18n-check export --only-locales bn
+locale,key,source,target,reason
+bn,auth:logout,Sign out,,missing
+bn,common:brand,Acme,Acme,untranslated
+bn,common:legacy,Old banner,,missing
+bn,common:nav.settings,Settings,Settings,untranslated
+bn,common:status.blocked,Blocked,,empty
+5 strings to translate in 1 locale
+```
+
+(The summary line goes to standard error, so redirecting stdout gives a clean
+file. Add `"ignoreUntranslated": ["common:brand"]` to drop brand names.)
+
+| Option | Meaning |
+| --- | --- |
+| `--format <f>` | `csv` (default), `xliff` or `json` |
+| `--include <list>` | `missing`, `empty`, `untranslated` (default: all three) |
+| `--only-locales <list>` | Only these locales |
+| `--output <file>` | Write to a file instead of standard output |
+
+- **CSV** has the columns `locale,key,source,target,reason`, RFC 4180
+  quoting and CRLF line ends; cells starting with `=`, `+`, `-` or `@` get a
+  leading `'` so spreadsheets do not run them as formulas.
+- **XLIFF 1.2** has one `<file>` per target locale, the key as `id` and
+  `resname`, the base text as `<source>`, the current text as
+  `<target state="needs-translation">` and the reason as a `<note>`.
+- **JSON** is `{ "sourceLanguage": "en", "tasks": [{ locale, key, namespace, source, target, reason }] }`.
+
+Plural forms a locale does not use are not listed, and the config applies:
+`ignoreKeys`, `ignoreUntranslated` (brand names) and rules turned `off`
+(`"untranslated": "off"`) remove strings from the export. The source code is
+not scanned.
 
 ## Configuration
 
@@ -363,6 +411,7 @@ console.log(formatMarkdown(result));
 | ---------------------------------------------- | -------------------------------------------------------- |
 | `analyze(options)`                             | Load locales, scan sources, run checks                   |
 | `planFixes(result, options, cwd)` / `applyFixes(changes, cwd)` | What `fix` does, without or with writing  |
+| `collectTasks(result, include)` / `formatTasks(tasks, format, sourceLanguage)` | What `export` does; also `tasksToCsv`, `tasksToXliff` |
 | `loadCatalog(options)` / `discoverLocaleFiles(cwd, patterns)` | Locale files and their entries             |
 | `scanUsage(cwd, extractors, options)`          | Used and dynamic keys in source files                    |
 | `builtinExtractors`, `registerExtractor()`, `getExtractor()`, `detectExtractors()` | Extractors      |
@@ -495,8 +544,7 @@ are usually self-contained.
 - `fix` for `.po` files and comment-preserving YAML writes
 - A `--watch` mode and a cache for large monorepos
 - Monorepo mode: one run for every workspace package
-- Machine-translation-free "suggest" output: list untranslated keys as a CSV
-  or XLIFF for translators
+- `import` to read translated CSV / XLIFF files back into the locale files
 - An ESLint plugin that reuses the extractors
 
 ## Limitations

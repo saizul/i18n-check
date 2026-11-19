@@ -6,6 +6,15 @@ import { allChecks } from '../checks/index.js';
 import type { Severity } from '../checks/types.js';
 import { ConfigError, type FillMode, type I18nCheckConfig, loadConfig, type RuleSetting } from '../config.js';
 import { builtinExtractors } from '../extractors/index.js';
+import {
+  collectTasks,
+  EXPORT_FORMATS,
+  type ExportFormat,
+  formatTasks,
+  TASK_REASONS,
+  TASK_RULES,
+  type TaskReason,
+} from '../export.js';
 import { applyFixes, planFixes } from '../fix.js';
 import { CatalogError } from '../locales/catalog.js';
 import { colors, counts, type Format, formatResult, plural } from '../report/index.js';
@@ -28,6 +37,7 @@ Usage:
   i18n-check [check] [options]     Report problems (default command)
   i18n-check fix [options]         Sort keys, add missing keys, remove unused ones
   i18n-check extract [options]     List the keys found in the source code
+  i18n-check export [options]      Untranslated keys for translators as CSV, XLIFF or JSON
 
 Locales and sources:
   --locales <pattern>      Locale files, e.g. "locales/{locale}/{namespace}.json" (repeatable)
@@ -57,6 +67,11 @@ Fix:
   --sort / --no-sort       Sort keys (default: on)
   --dry-run                Show what would change without writing
   (fix without action flags = --add-missing --sort)
+
+Export:
+  --format <f>             csv (default), xliff or json
+  --include <list>         missing, empty, untranslated (default: all three)
+  --output <file>          Write to a file instead of standard output
 
 General:
   --cwd <dir>              Project directory
@@ -94,12 +109,13 @@ const OPTIONS = {
   sort: { type: 'boolean' },
   'no-sort': { type: 'boolean' },
   'dry-run': { type: 'boolean' },
+  include: { type: 'string' },
   'no-color': { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
   version: { type: 'boolean', short: 'v' },
 } as const;
 
-const COMMANDS = new Set(['check', 'fix', 'extract']);
+const COMMANDS = new Set(['check', 'fix', 'extract', 'export']);
 const SEVERITIES = ['error', 'warning', 'info'];
 
 const list = (v: string | undefined) =>
@@ -150,6 +166,7 @@ export async function run(argv: string[], io: CliIO): Promise<number> {
   const cwd = v.cwd ? (isAbsolute(v.cwd) ? v.cwd : join(baseCwd, v.cwd)) : baseCwd;
 
   try {
+    if (command === 'export') return runExport(v, cwd, io);
     const format = (v.format ?? 'pretty') as Format;
     if (!['pretty', 'json', 'markdown', 'github'].includes(format))
       throw new UsageError(`--format must be pretty, json, markdown or github (got "${v.format}")`);
@@ -256,6 +273,33 @@ export async function run(argv: string[], io: CliIO): Promise<number> {
     }
     throw err;
   }
+}
+
+function runExport(v: Values, cwd: string, io: CliIO): number {
+  const format = (v.format ?? 'csv') as ExportFormat;
+  if (!EXPORT_FORMATS.includes(format))
+    throw new UsageError(`--format must be ${EXPORT_FORMATS.join(', ')} for export (got "${v.format}")`);
+  const include = (list(v.include) ?? [...TASK_REASONS]) as TaskReason[];
+  const bad = include.filter((r) => !TASK_REASONS.includes(r));
+  if (bad.length > 0)
+    throw new UsageError(`--include takes ${TASK_REASONS.join(', ')} (got "${bad.join(', ')}")`);
+  const { config } = loadConfig(cwd, v.config);
+  const options = mergeOptions(config, v);
+  const result = analyze({ ...options, cwd, noSource: true, only: [...TASK_RULES] });
+  const tasks = collectTasks(result, include);
+  const text = formatTasks(tasks, format, result.catalog.baseLocale);
+  const locales = new Set(tasks.map((t) => t.locale)).size;
+  const summary = `${plural(tasks.length, 'string')} to translate in ${plural(locales, 'locale')}\n`;
+  if (v.output) {
+    const out = isAbsolute(v.output) ? v.output : join(cwd, v.output);
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, text);
+    io.stdout(`Wrote ${v.output}: ${summary}`);
+  } else {
+    io.stdout(text);
+    io.stderr(summary);
+  }
+  return 0;
 }
 
 type Values = ReturnType<typeof parseArgs<{ options: typeof OPTIONS; allowPositionals: true }>>['values'];
